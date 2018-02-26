@@ -1,14 +1,14 @@
 package lv.tsi.guessnum;
 
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
+    static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-
         Random random = new Random();
-        Scanner scanner = new Scanner(System.in);
         String repeatAnswer;
         do {
             int myNum = random.nextInt(100) + 1;
@@ -18,7 +18,7 @@ public class Main {
 
             for (int i = 1; i <= 10; i++) {
                 System.out.print("Attempt " + i + ". Your guess: ");
-                int userNum = scanner.nextInt();
+                int userNum = askUserNum();
                 if (userNum > myNum) {
                     System.out.println("Your number is greater than mine!");
                 } else if (userNum < myNum) {
@@ -37,4 +37,31 @@ public class Main {
 
         System.out.println("Good bye!");
     }
+
+    private static int askUserNum() {
+        for (; ; ) {
+            try {
+                int num = scanner.nextInt();
+                if (num >= 1 && num <= 100) {
+                    return num;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("It isn't a number!");
+                scanner.next();
+            }
+            System.out.print("Incorrect number. It should be an integer from 1 to 100. Try again: ");
+        }
+    }
+
+//    private static int askUserNum() {
+//        int num;
+//        do {
+//            num = scanner.nextInt();
+//            if (num < 1 || num > 100) {
+//                System.out.print("Incorrect number. It should be an integer from 1 to 100. Try again: ");
+//            }
+//        } while (num < 1 || num > 100);
+//        return num;
+//    }
 }
+
